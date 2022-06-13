@@ -1,22 +1,23 @@
 import React from 'react';
 import { AddProduct } from './AddProduct';
 import './App.css';
-import { useState } from 'react';
-import { Products, Product } from './products';
+import { Product } from './products';
 import { ProductComponent } from './ProductComponent';
 
-function App() {
-  const addProduct = (product: Product) => {
-    setProducts([...products, product]);
+class App extends React.Component<{}, Product[]> {
+  addProduct = (product: Product) => {
+    this.setState([...this.state, product]);
   }
-  const [products, setProducts] = useState(Products)
+
+  render() {
   return (
     <div className="App">
-      {products.map(p => ProductComponent(p))
+      {this.state.map(p => <ProductComponent {...p} ></ProductComponent>)
       }
-      <AddProduct onAddProduct={addProduct}></AddProduct>
+      <AddProduct onAddProduct={this.addProduct}></AddProduct>
     </div>
   );
+    }
 }
 
 export default App;
