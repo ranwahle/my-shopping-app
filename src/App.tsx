@@ -13,6 +13,10 @@ class App extends React.Component<{}, {products: Product[]}> {
     this.setState({products: [...products, product]});
   }
 
+  constructor() {
+    super({})
+  }
+
   componentWillMount() {
     this.setState({products: []})
     console.log(Date.now(), 'will mount')
