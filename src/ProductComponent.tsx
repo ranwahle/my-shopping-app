@@ -1,19 +1,26 @@
 import { Product } from './products';
 import './ProductComponent.css'
 import { useEffect } from 'react';
+import {useState} from 'react';
+import React from 'react';
 
-let onLine = false;
 
-function setIsOnline() {
-    onLine = Math.random() > 0.5;
+function randomeIsOnline(): Promise<boolean>  {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(Math.random() > 0.5), 1000)
+    })
 }
 
 export const ProductComponent = (product: Product ) => {
-    useEffect(() => setIsOnline())
+    const [isOnline, setIsOnline] = useState(false);
+    useEffect(() => {
+        randomeIsOnline().then(res => setIsOnline(res));
+    })
+
     return  <div className='container'><div>
     {product?.title}
 </div>
-<div className={onLine? 'online': ''}>{product.description}
+<div className={isOnline? 'online': ''}>{product.description}
 </div>
 <div>
 <img src={product.imageUrl} alt={product.description}></img>
