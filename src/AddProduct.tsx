@@ -20,7 +20,7 @@ export function AddProduct(props: {onAddProduct: (product: Product) => void}) {
     }
 
     const addProduct = () => {
-        props.onAddProduct(product);
+        props.onAddProduct({...product});
     }
 
     return (<div>
