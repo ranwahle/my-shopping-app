@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+}
+
+.container > div {
+    padding: 1em;
+    border: 1px solid;
+    width: 20em;
+}
