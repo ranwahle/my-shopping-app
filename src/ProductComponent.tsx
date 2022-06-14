@@ -15,6 +15,10 @@ export const ProductComponent = (product: Product ) => {
     const [isOnline, setIsOnline] = useState(false);
     useEffect(() => {
         randomeIsOnline().then(res => setIsOnline(res));
+
+        return () => {
+            console.log('Cleaning up')
+        }
     })
 
     return  <div className='container'><div>
