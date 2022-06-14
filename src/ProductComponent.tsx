@@ -4,6 +4,7 @@ import React from "react";
 import "./ProductComponent.css";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 
 function randomeIsOnline(): Promise<boolean> {
   return new Promise((resolve) => {
@@ -32,7 +33,7 @@ const ProductComponent = (product: ProductComponentProps) => {
         <img src={product.imageUrl} alt={product.description}></img>
       </div>
       <div>
-        <button onClick={product.deleteProduct}>Delete</button>
+        <Button onClick={product.deleteProduct}>Delete</Button>
       </div>
     </div>
   );
