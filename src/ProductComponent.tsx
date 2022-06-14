@@ -11,13 +11,15 @@ function randomeIsOnline(): Promise<boolean>  {
     })
 }
 
+let timer: any; 
 export const ProductComponent = (product: Product ) => {
     const [isOnline, setIsOnline] = useState(false);
     useEffect(() => {
-        randomeIsOnline().then(res => setIsOnline(res));
-
+        timer =  setInterval(() =>  randomeIsOnline().then(res => setIsOnline(res) ), 1000);
+        
+       
         return () => {
-            console.log('Cleaning up')
+            clearInterval(timer);
         }
     })
 
