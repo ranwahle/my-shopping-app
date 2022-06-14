@@ -1,5 +1,6 @@
 
 import React, { ChangeEvent, useState } from "react"
+import { Button, ButtonGroup } from '@chakra-ui/react'
 import { Product } from './products';
 
 export interface AddProductProps {
@@ -41,7 +42,7 @@ const AddProduct = (props:  {onAddProduct: (product: Product) => void} ) => {
         <label>Image URL:
         <input type="text" placeholder="image URL" onChange={setImageUrl} defaultValue={product?.imageUrl}></input>
         </label>
-        <button onClick={addProduct}>Add</button>
+        <Button onClick={addProduct}>Add</Button>
     </div>)
 }
 
