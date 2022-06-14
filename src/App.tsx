@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import { AddProduct } from './AddProduct';
+import AddProduct from './AddProduct';
 import './App.css';
 import { Product } from './products';
 import { ProductComponent } from './ProductComponent';
 
-function App() {
-  const [products, setProducts] = useState<Product[]>([]);
-
+export default function App() {
+  const [products, setProucts] = useState<Product[]>([]);
+ 
   const addProduct = (product: Product) => {
-    setProducts([...products, product])
+    setProucts([...products, {...product}])
+  }
+
+  const deleteProduct = (product: Product) => {
+    const newProductsList = products.filter(p => p !== product);
+    setProucts( newProductsList)
   }
 
 
   return (
     <div className="App">
-      {products.map(p => <ProductComponent {...p} ></ProductComponent>)
+            <AddProduct onAddProduct={addProduct}></AddProduct>
+      {products.map((p, index) => 
+      <ProductComponent key={index} product={p} deleteProduct={() => deleteProduct(p)} ></ProductComponent>)
       }
-      <AddProduct onAddProduct={addProduct}></AddProduct>
-    </div>
-  );
-
+    </div>)
 }
 
-export default App;
+
