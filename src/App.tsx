@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddProduct from './AddProduct';
 import './App.css';
 import { Product } from './products';
-import { ProductComponent } from './ProductComponent';
+import  ProductComponent from './ProductComponent';
 
 export default function App() {
   const [products, setProucts] = useState<Product[]>([]);

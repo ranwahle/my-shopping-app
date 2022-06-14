@@ -14,7 +14,7 @@ const AddProduct = (props:  {onAddProduct: (product: Product) => void} ) => {
         description: '',
         imageUrl: ''
     });
-    
+
     const setTitle = (changeEvent: ChangeEvent<HTMLInputElement>) => {
         setProduct({...product,title: changeEvent.target.value} );
     }
@@ -45,7 +45,7 @@ const AddProduct = (props:  {onAddProduct: (product: Product) => void} ) => {
     </div>)
 }
 
-export default AddProduct;
+export default React.memo(AddProduct);
 
 // export class AddProduct extends React.Component< {onAddProduct: (product: Product) => void}, Product> {
     
