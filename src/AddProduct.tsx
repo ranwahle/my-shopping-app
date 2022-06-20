@@ -1,13 +1,12 @@
 
 import React, { ChangeEvent, useState } from "react"
-import { Button, ButtonGroup, Input } from '@chakra-ui/react'
+import { Button, Input } from '@chakra-ui/react'
 import { Product } from './products';
 
 export interface AddProductProps {
     onAddProduct: (product: Product) => void;
 }
-const AddProduct = (props:  {onAddProduct: (product: Product) => void} ) => {
-//const AddProduct = (props: AddProductProps ) => {
+const AddProduct = (props: AddProductProps ) => {
 
 
     const [product, setProduct] = useState<Product>({

@@ -20,7 +20,6 @@ let timer: any;
     const [isOnline, setIsOnline] = useState(false);
     useEffect(() => {
         timer =  setInterval(() =>  randomeIsOnline().then(res => setIsOnline(res) ), 1000);
-        
        
         return () => {
             clearInterval(timer);
