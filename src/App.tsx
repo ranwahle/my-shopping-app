@@ -14,13 +14,13 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [message, setMessage] = useState('');  
  
-  const addProduct =  useCallback( (product: Product) => {
+  const addProduct =   (product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
     }
     console.log(products, product)
     setProducts([...products, {...product}])
-  }, [products]);
+  };
 
   const deleteProduct = (product: Product) => {
     const newProductsList = products.filter(p => p !== product);
