@@ -1,5 +1,5 @@
 
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent, useRef, useState } from "react"
 import { Button, Input } from '@chakra-ui/react'
 import { Product } from './products';
 
@@ -8,6 +8,7 @@ export interface AddProductProps {
 }
 const AddProduct = (props: AddProductProps ) => {
 
+    const titleRef = useRef(null);
 
     const [product, setProduct] = useState<Product>({
         title: '',
@@ -28,12 +29,17 @@ const AddProduct = (props: AddProductProps ) => {
     }
 
     const addProduct = () => {
+        if (!product.title) {
+            (titleRef.current as unknown as HTMLElement).focus();
+            return;
+        }
         props.onAddProduct({...product});
     }
 
     return (<div>
         <label>Title:
-        <Input type="text" placeholder="title" onChange={setTitle} defaultValue={product?.title}></Input>
+        <Input type="text" ref={titleRef} placeholder="title" 
+        onChange={setTitle} defaultValue={product?.title}></Input>
         </label>
         <label>Description:
         <Input type="text" placeholder="description" onChange={setDescription} defaultValue={product?.description}></Input>
