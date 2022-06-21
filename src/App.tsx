@@ -14,7 +14,7 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [message, setMessage] = useState('');  
  
-  const addProduct =   (product: Product) => {
+  const addProduct = (product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
     }
