@@ -22,10 +22,10 @@ export default function App() {
     setProducts([...products, {...product}])
   }, [products]);
 
-  const deleteProduct = useCallback((product: Product) => {
+  const deleteProduct = (product: Product) => {
     const newProductsList = products.filter(p => p !== product);
     setProducts( newProductsList)
-  }, [products])
+  };
 
   const updateMessage = (newMessage: string) => setTimeout(() => setMessage(newMessage))
   
