@@ -27,6 +27,8 @@ export default function App() {
     setProducts( newProductsList)
   };
 
+  
+
   const updateMessage = (newMessage: string) => setTimeout(() => setMessage(newMessage))
   
   useEffect(() => {
