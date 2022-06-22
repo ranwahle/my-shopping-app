@@ -15,9 +15,10 @@ export class MessageBroker {
         const message = `Now is ${new Date()}`;
         console.log(`There are ${this.callbacks.length} callbacks`);
         this.callbacks.forEach(callback => callback(message) )
+        setTimeout(this.sendMessage, 1000)
     }
 
     constructor() {
-        setInterval(this.sendMessage, 1000);
+        setTimeout(this.sendMessage, 1000);
     }
 }

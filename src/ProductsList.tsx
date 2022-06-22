@@ -25,9 +25,7 @@ function ProductsList(props: {
    
     const listHeader: () => string  = () => {
     //  alert('hi');
-    for (let i=0; i < 10000; i++) {
-      console.log('i')
-    }
+    
       return  TextNumbers[products.length];
     }
     return (<>

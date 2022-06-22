@@ -2,39 +2,45 @@ import './App.css';
 import './App.css';
 import { Guid } from './guid-util';
 import { Alert, AlertTitle, ChakraProvider, theme } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import ProductsList from './ProductsList';
 import './App.css';
 import { Product } from './products';
-import { MessageBroker } from './MessageBroker';
+import { useMessage } from './use-message-hook';
 
-const messageBroker = new MessageBroker(); 
+const productsReducer = (state: Product[], action: {type: 'add' | 'remove', payload: Product} ) => {
+  switch(action.type) {
+    case 'add': {
+      return [...state, action.payload];
+    } case 'remove': {
+      return [...state.filter(product => product !== action.payload)];
+    }
+  }
+}
+
 
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [message, setMessage] = useState('');  
- 
+  const [productState, productDispatch] = useReducer(productsReducer, []);
+  const message = useMessage();
+
   const addProduct = (product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
     }
-    console.log(products, product)
-    setProducts([...products, {...product}])
+    productDispatch({type: 'add', payload: product});
   };
 
   const deleteProduct = (product: Product) => {
-    const newProductsList = products.filter(p => p !== product);
-    setProducts( newProductsList)
+    productDispatch({type: 'remove', payload: product})
   };
 
-  
 
-  const updateMessage = (newMessage: string) => setTimeout(() => setMessage(newMessage))
   
   useEffect(() => {
-    messageBroker.subscribe(updateMessage);
+   
     document.title = `There are ${products.length} products`;
-    return () => messageBroker.unsubscribe(updateMessage);
+
   })
 
  
@@ -44,7 +50,7 @@ export default function App() {
  <Alert status='error'>
         <AlertTitle>{message}</AlertTitle>
         </Alert> 
-        <ProductsList products={products} addProduct={addProduct}
+        <ProductsList products={productState} addProduct={addProduct}
         deleteProduct={deleteProduct}
          ></ProductsList>
     </ChakraProvider>)
