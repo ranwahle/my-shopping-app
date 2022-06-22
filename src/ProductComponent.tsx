@@ -1,31 +1,15 @@
 import { Product } from './products';
 import './ProductComponent.css'
-import { useEffect } from 'react';
-import {useState} from 'react';
 import React from 'react';
 import { Button } from '@chakra-ui/react';
+import { useProductStatus } from './useProductStatus';
 
 interface ProductComponentProps extends Product {
     deleteProduct: () => void;
   }
   
-function randomeIsOnline(): Promise<boolean>  {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(Math.random() > 0.5), 1000)
-    })
-}
-
-let timer: any;
  const ProductComponent = (product: ProductComponentProps ) => {
-    const [isOnline, setIsOnline] = useState(false);
-    useEffect(() => {
-        timer =  setInterval(() =>  randomeIsOnline().then(res => setIsOnline(res) ), 1000);
-       
-        return () => {
-            clearInterval(timer);
-        }
-    })
-
+    const isOnline = useProductStatus(); 
     return  <div className='container'><div>
     {product?.title}
 </div>
