@@ -25,7 +25,7 @@ let timer: any;
         return () => {
             clearInterval(timer);
         }
-    })
+    }, [product]);
 
     return  <div className='container'><div>
     {product?.title}

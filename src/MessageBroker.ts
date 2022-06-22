@@ -13,7 +13,6 @@ export class MessageBroker {
 
     sendMessage = () => {
         const message = `Now is ${new Date()}`;
-        console.log(`There are ${this.callbacks.length} callbacks`);
         this.callbacks.forEach(callback => callback(message) )
     }
 
