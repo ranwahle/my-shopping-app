@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useMemo } from 'react';
 import AddProduct from './AddProduct';
 import ProductComponent from './ProductComponent';
 import { Product } from './products';
@@ -24,10 +24,15 @@ function ProductsList(props: {
     console.log('I am in memo but runs', products);
    
     const listHeader: () => string  = () => {
+    //  alert('hi');
+    for (let i=0; i < 10000; i++) {
+      console.log('i')
+    }
       return  TextNumbers[products.length];
     }
     return (<>
     {useMemo(listHeader, [products.length])} products
+    {/* {listHeader()} products */}
      <div className="App">
             <AddProduct onAddProduct={addProduct}></AddProduct>
 
@@ -47,4 +52,4 @@ function ProductsList(props: {
     </>);
 }
 
-export default memo(ProductsList);
+export default ProductsList;
