@@ -7,10 +7,12 @@ import ProductsList from './ProductsList';
 import './App.css';
 import { Product } from './products';
 import { MessageBroker } from './MessageBroker';
+import { Store } from 'redux';
+import { ProductAction, RootState } from './root-reducer';
 
 const messageBroker = new MessageBroker(); 
 
-export default function App() {
+export default function App(props: {store: Store<RootState, ProductAction>}) {
   const [products, setProducts] = useState<Product[]>([]);
   const [message, setMessage] = useState('');  
  
@@ -37,7 +39,7 @@ export default function App() {
     return () => messageBroker.unsubscribe(updateMessage);
   })
 
- 
+
   
   return (
     <ChakraProvider theme={theme}>
