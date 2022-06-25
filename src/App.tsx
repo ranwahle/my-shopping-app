@@ -13,7 +13,8 @@ import { ProductAction, RootState } from './root-reducer';
 const messageBroker = new MessageBroker(); 
 
 export default function App(props: {store: Store<RootState, ProductAction>}) {
-  const [products, setProducts] = useState<Product[]>([]);
+  console.log('store state', props.store.getState());
+  const {products} = props.store.getState();
   const [message, setMessage] = useState('');  
  
   const addProduct = useCallback((product: Product) => {
@@ -21,12 +22,11 @@ export default function App(props: {store: Store<RootState, ProductAction>}) {
       product.id = Guid.newGuid();
     }
     console.log(products, product)
-    setProducts([...products, {...product}])
-  }, [products]);
+    props.store.dispatch({type: 'Add', payload: product})
+  }, [props.store]);
 
   const deleteProduct = useCallback( (product: Product) => {
-    const newProductsList = products.filter(p => p !== product);
-    setProducts( newProductsList)
+   props.store.dispatch({type: 'Remove', payload: product})
   }, [products]);
 
   
