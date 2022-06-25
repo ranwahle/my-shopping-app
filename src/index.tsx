@@ -6,11 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import {legacy_createStore as createStore} from 'redux';
 import { rootReducer } from './root-reducer';
 
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, composeWithDevTools())
 
 root.render(
   
