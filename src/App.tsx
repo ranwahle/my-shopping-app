@@ -2,14 +2,16 @@ import "./App.css";
 import "./App.css";
 import { Guid } from "./guid-util";
 import { Alert, AlertTitle, ChakraProvider, theme } from "@chakra-ui/react";
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductsList from "./ProductsList";
 import "./App.css";
 import { Product } from "./products";
 import { MessageBroker } from "./MessageBroker";
 import { Store } from "redux";
-import { ProductAction, RootState, EditedProductAction } from './root-reducer';
+import { RootState } from './root-reducer';
 import EditProduct from "./EditProduct";
+import { ProductAction } from "./products-list-reducer";
+import { EditedProductAction } from "./edited-product-reducer";
 
 const messageBroker = new MessageBroker();
 

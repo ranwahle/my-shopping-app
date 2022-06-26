@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {legacy_createStore as createStore} from 'redux';
+import {legacy_createStore as createStore, applyMiddleware} from 'redux';
 import { rootReducer } from './root-reducer';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -11,8 +11,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-
-const store = createStore(rootReducer, composeWithDevTools())
+// applyMiddleware(saveProductMilldeware)
+const store = createStore(rootReducer,  composeWithDevTools())
 
 root.render(
   
