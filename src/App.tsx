@@ -8,19 +8,25 @@ import './App.css';
 import { Product } from './products';
 import { useMessage } from './use-message-hook';
 
-const productsReducer = (state: Product[], action: {type: 'add' | 'remove', payload: Product} ) => {
-  switch(action.type) {
-    case 'add': {
-      return [...state, action.payload];
-    } case 'remove': {
-      return [...state.filter(product => product !== action.payload)];
-    }
+
+const productActionsDict: {[key: string] : (state: Product[], payload: Product) => Product[]} = {
+
+  'add': (state, payload) => [...state, payload ],
+  'remove': (state, payload) => [...state.filter(p => p !== payload)]
+}
+
+type ActionType = {type: 'add' | 'remove', payload: Product};
+
+const productsReducer = (state: Product[], action:ActionType ) => {
+  const func = productActionsDict[action.type];
+  if (!func) {
+    return state;
   }
+  return func(state, action.payload)
 }
 
 
 export default function App() {
-  const [products, setProducts] = useState<Product[]>([]);
   const [productState, productDispatch] = useReducer(productsReducer, []);
   const message = useMessage();
 
@@ -39,7 +45,7 @@ export default function App() {
   
   useEffect(() => {
    
-    document.title = `There are ${products.length} products`;
+    document.title = `There are ${productState.length} products`;
 
   })
 
