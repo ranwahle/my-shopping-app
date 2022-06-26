@@ -3,32 +3,58 @@ import { Product } from "./products";
 
 export interface RootState { 
     products: Product[];
+    editedProduct?: Product | null;
 }
 
-export interface ProductAction extends Action<'Add' | 'Remove'> {
+export interface ProductAction extends Action<'List-Add' | 'List-Remove' | 'List-Update'> {
    // type: 'Add' | 'Remove';
     payload: Product;
 }
 
+export interface EditedProductAction extends Action<'EditedProduct-Set' | 'EditedProduct-Reset'> {
+    payload: Product | null;
+}
 const initialProductsState: Product[] = [];
 
-
-const initialState: RootState = {
-    products: initialProductsState
-}
+const initialEditedProductState: Product | null = null;
 
 
 const actionTypeToActions: {[type: string] : 
     (products: Product[], product: Product) => Product[] } =  {
-    'Add' : (products: Product[], product: Product) => (
+    'List-Add' : (products: Product[], product: Product) => (
         [...products, product]),
-    'Remove' : (products: Product[], product: Product) => (
+    'List-Remove' : (products: Product[], product: Product) => (
          [...products.filter(p => p.id !== product.id)]),
+    'List-Update' : (products: Product[], product: Product) => {
+        const existingProdIndex = products.findIndex(p => p.id === product.id);
+        if (existingProdIndex < 0) {
+            return products;
+        }
+        const newList = [...products];
+         newList.splice(existingProdIndex, 1, product);  
+         return newList; 
+    }
 }
 
 
 
-export const rootReducer = combineReducers({products: productsReducer});
+export const rootReducer = combineReducers({products: productsReducer, editedProduct: editedProductReducer});
+
+
+export function editedProductReducer(state: Product | null = initialEditedProductState, 
+    action: EditedProductAction ) {
+    switch(action.type) {
+        case 'EditedProduct-Set': {
+            return action.payload;
+        }
+        case 'EditedProduct-Reset': {
+            return null;
+        }
+        default: {
+            return state;
+        }
+    }
+}
 
 
 export function productsReducer(state: Product[] = initialProductsState, action: ProductAction ) {
@@ -38,3 +64,4 @@ export function productsReducer(state: Product[] = initialProductsState, action:
     }
     return func(state, action.payload);
 }
+
