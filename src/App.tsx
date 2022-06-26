@@ -10,10 +10,20 @@ import { MessageBroker } from './MessageBroker';
 
 const messageBroker = new MessageBroker(); 
 
+const useMessageHook = () => {
+  const [message, setMessage] = useState('');  
+  const updateMessage = (newMessage: string) => setTimeout(() => setMessage(newMessage))
+  useEffect(() => {
+    messageBroker.subscribe(updateMessage);
+    return () => messageBroker.unsubscribe(updateMessage);
+  }, [message])
+
+  return message;
+} 
+
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [message, setMessage] = useState('');  
- 
+  
   const addProduct = useCallback((product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
@@ -28,17 +38,12 @@ export default function App() {
   }, [products]);
 
   
-
-  const updateMessage = (newMessage: string) => setTimeout(() => setMessage(newMessage))
+  const message = useMessageHook();
   
   useEffect(() => {
-    messageBroker.subscribe(updateMessage);
-    document.title = `There are ${products.length} products`;
-    return () => messageBroker.unsubscribe(updateMessage);
+    document.title = `There are ${products.length} products`;  
   })
-
  
-  
   return (
     <ChakraProvider theme={theme}>
  <Alert status='error'>
