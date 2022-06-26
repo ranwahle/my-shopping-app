@@ -17,6 +17,9 @@ export default function App(props: { store: Store<RootState, ProductAction> }) {
   const { store } = props;
   const [products, setProducts] = useState(store.getState().products);
 
+  const setEditedProduct = (product: Product) => {
+
+  }
   const addProduct = (product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
@@ -54,6 +57,7 @@ export default function App(props: { store: Store<RootState, ProductAction> }) {
       </Alert>
       <ProductsList
         products={products}
+        setEditedProduct={setEditedProduct}
         addProduct={addProduct}
         deleteProduct={deleteProduct}
       ></ProductsList>

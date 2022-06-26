@@ -19,9 +19,9 @@ const TextNumbers: {[index: number]  : string} = {
 
 function ProductsList(props: {
     deleteProduct: (p: Product) => void,
-    products: Product[], addProduct: (product: Product) => void}) {
-    const {products, addProduct, deleteProduct} = props;
-    console.log('I am in memo but runs', products);
+    products: Product[], addProduct: (product: Product) => void, 
+    setEditedProduct: (product: Product) => void}) {
+    const {products, addProduct, deleteProduct, setEditedProduct} = props;
    
     const listHeader: () => string  = () => {
       return  TextNumbers[products.length];
@@ -38,7 +38,7 @@ function ProductsList(props: {
       </div>
       
 
-      {products.map(p => <ProductComponent key={p.id} deleteProduct={() => deleteProduct(p)} {...p} ></ProductComponent>)
+      {products.map(p => <ProductComponent key={p.id} deleteProduct={() => deleteProduct(p)} setEditedProduct={() => setEditedProduct(p)} {...p} ></ProductComponent>)
       }
 
      
