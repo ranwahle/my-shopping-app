@@ -7,9 +7,10 @@ import { ProductAction } from "./products-list-reducer";
 import { RootState } from "./root-reducer";
 import { Store} from 'redux';
 import {useEffect} from 'react';
+import { MessageAction } from './messags-reducer';
 
 const EditProduct = (props: {
-    store: Store<RootState, ProductAction | EditedProductAction >
+    store: Store<RootState, ProductAction | EditedProductAction | MessageAction >
 }) => {
   const { store } = props;
 

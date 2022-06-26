@@ -12,23 +12,21 @@ import { RootState } from './root-reducer';
 import EditProduct from "./EditProduct";
 import { ProductAction } from "./products-list-reducer";
 import { EditedProductAction } from "./edited-product-reducer";
+import { MessageAction } from './messags-reducer';
 
 const messageBroker = new MessageBroker();
 
-export default function App(props: { store: Store<RootState, ProductAction | EditedProductAction > }) {
-  const [message, setMessage] = useState("");
+export default function App(props: { store: Store<RootState, ProductAction | EditedProductAction | MessageAction > }) {
   const { store } = props;
   const state = store.getState();
+  const [message, setMessage] = useState(state.message);
   const [products, setProducts] = useState(state.products);
-  const [editedProduct, setEditedProduct] = useState(state.editedProduct);
 
   const editProduct = (product: Product) => {
     store.dispatch({type: 'EditedProduct-Set', payload: product})
   }
 
-  const onCancelEdit = () => {
-    store.dispatch({type: 'EditedProduct-Reset', payload: null});
-  }
+ 
   const addProduct = (product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
@@ -40,13 +38,9 @@ export default function App(props: { store: Store<RootState, ProductAction | Edi
     store.dispatch({ type: "List-Remove", payload: product });
   };
 
-  const onSaveProduct = (product: Product) => { 
-    store.dispatch({type: 'List-Update', payload: product});
-    store.dispatch({type: 'EditedProduct-Reset', payload: null})
-
-  }
+ 
   const updateMessage = (newMessage: string) =>
-    setTimeout(() => setMessage(newMessage));
+    setTimeout(() => store.dispatch({type: 'Message-Add', messagePayload: newMessage}));
 
   useEffect(() => {
     messageBroker.subscribe(updateMessage);
@@ -57,14 +51,14 @@ export default function App(props: { store: Store<RootState, ProductAction | Edi
 
   useEffect(() => {
     const storeSubscriber = () => {
-      const {products, editedProduct} = store.getState();
+      const {products, message} = store.getState();
       setProducts(products);
-      setEditedProduct(editedProduct);
+      setMessage(message);
     };
     //setProducts(store.getState().products)
     document.title = `There are ${products.length} products`;
     return store.subscribe(storeSubscriber);
-  }, [products.length]);
+  }, [products.length, message]);
 
   return (
     <ChakraProvider theme={theme}>

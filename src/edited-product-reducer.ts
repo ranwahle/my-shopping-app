@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { Product } from './products';
 
 export interface EditedProductAction extends Action<'EditedProduct-Set' | 'EditedProduct-Reset'> {
-    payload: Product | null;
+    payload?: Product | null;
 }
 
 const initialEditedProductState: Product | null = null;

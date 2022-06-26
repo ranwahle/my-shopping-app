@@ -3,7 +3,7 @@ import { Product } from "./products";
 
 export interface ProductAction extends Action<'List-Add' | 'List-Remove' | 'List-Update'> {
     // type: 'Add' | 'Remove';
-     payload: Product;
+     payload?: Product;
  }
 
 const initialProductsState: Product[] = [];
@@ -29,5 +29,5 @@ export function productsReducer(state: Product[] = initialProductsState, action:
     if (!func) {
         return state;
     }
-    return func(state, action.payload);
+    return func(state, action.payload!);
 }
