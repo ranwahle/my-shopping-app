@@ -38,7 +38,8 @@ function ProductsList(props: {
       </div>
       
 
-      {products.map(p => <ProductComponent key={p.id} deleteProduct={() => deleteProduct(p)} setEditedProduct={() => setEditedProduct(p)} {...p} ></ProductComponent>)
+      {products.map(p => <ProductComponent key={p.id} deleteProduct={() => deleteProduct(p)} setEditedProduct={() => setEditedProduct(p)}
+       {...p} ></ProductComponent>)
       }
 
      

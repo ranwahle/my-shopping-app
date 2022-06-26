@@ -25,6 +25,10 @@ export default function App(props: { store: Store<RootState, ProductAction | Edi
   const editProduct = (product: Product) => {
     store.dispatch({type: 'EditedProduct-Set', payload: product})
   }
+
+  const onCancelEdit = () => {
+    store.dispatch({type: 'EditedProduct-Reset', payload: null});
+  }
   const addProduct = (product: Product) => {
     if (!product.id) {
       product.id = Guid.newGuid();
@@ -60,7 +64,7 @@ export default function App(props: { store: Store<RootState, ProductAction | Edi
     //setProducts(store.getState().products)
     document.title = `There are ${products.length} products`;
     return store.subscribe(storeSubscriber);
-  }, []);
+  }, [products.length]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -73,7 +77,8 @@ export default function App(props: { store: Store<RootState, ProductAction | Edi
         addProduct={addProduct}
         deleteProduct={deleteProduct}
       ></ProductsList>
-      {editedProduct? <EditProduct product={editedProduct} saveProduct={onSaveProduct}></EditProduct> : null}
+      <EditProduct store={store}></EditProduct>
+
     </ChakraProvider>
   );
 }

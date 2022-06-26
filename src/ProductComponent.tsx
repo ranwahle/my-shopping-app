@@ -19,7 +19,6 @@ const ProductComponent = (props: ProductComponentProps) => {
         <img src={props.imageUrl} alt={props.description}></img>
       </div>
       <div>
-        {" "}
         <Button onClick={props.deleteProduct}>Delete</Button>
       </div>
       <div>

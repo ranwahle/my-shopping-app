@@ -5,8 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {legacy_createStore as createStore, applyMiddleware} from 'redux';
 import { rootReducer } from './root-reducer';
-
 import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

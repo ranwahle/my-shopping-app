@@ -2,29 +2,51 @@ import { Button, Input } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
 import { Product } from "./products";
 import {useState} from "react";
+import { EditedProductAction } from "./edited-product-reducer";
+import { ProductAction } from "./products-list-reducer";
+import { RootState } from "./root-reducer";
+import { Store} from 'redux';
+import {useEffect} from 'react';
 
 const EditProduct = (props: {
-  product: Product;
-  saveProduct: (p: Product) => void;
+    store: Store<RootState, ProductAction | EditedProductAction >
 }) => {
-  const { product, saveProduct } = props;
+  const { store } = props;
 
-  const [prodCandidate, setProdCandidate] = useState({ ...product });
+  const state = store.getState();
+  const [prodCandidate, setProdCandidate] = useState(state.editedProduct?  {...state.editedProduct}: null);
+ 
   const setTitle = (evt: ChangeEvent<HTMLInputElement>) => {
-    setProdCandidate({...prodCandidate, title : evt.target.value});
+    setProdCandidate({...prodCandidate!, title : evt.target.value});
   };
   const setDescription = (evt: ChangeEvent<HTMLInputElement>) => {
-    setProdCandidate({...prodCandidate, description : evt.target.value});
+    setProdCandidate({...prodCandidate!, description : evt.target.value});
   };
 
   const setImageUrl = (evt: ChangeEvent<HTMLInputElement>) => {
-    setProdCandidate({...prodCandidate, imageUrl : evt.target.value});
+    setProdCandidate({...prodCandidate!, imageUrl : evt.target.value});
   };
 
   const onSaveClick = () => {
-    saveProduct(prodCandidate);
+    store.dispatch({type: 'List-Update', payload: prodCandidate as Product})
+    store.dispatch({type: 'EditedProduct-Reset', payload: null})
   };
 
+  const onCancelClick = () => {
+    store.dispatch({type: 'EditedProduct-Reset', payload: null})
+  }
+
+  useEffect(() => {
+    return store.subscribe(() => {
+        const state = store.getState();
+        setProdCandidate(state.editedProduct? {...state.editedProduct} : null);
+    })
+  });
+
+  if (!prodCandidate) {
+    return null;
+  }
+  
   return (
     <div>
       <label>
@@ -33,7 +55,7 @@ const EditProduct = (props: {
           type="text"
           placeholder="title"
           onChange={setTitle}
-          defaultValue={product?.title}
+          defaultValue={prodCandidate?.title}
         ></Input>
       </label>
       <label>
@@ -42,7 +64,7 @@ const EditProduct = (props: {
           type="text"
           placeholder="description"
           onChange={setDescription}
-          defaultValue={product?.description}
+          defaultValue={prodCandidate?.description}
         ></Input>
       </label>
       <label>
@@ -51,10 +73,12 @@ const EditProduct = (props: {
           type="text"
           placeholder="image URL"
           onChange={setImageUrl}
-          defaultValue={product?.imageUrl}
+          defaultValue={prodCandidate?.imageUrl}
         ></Input>
       </label>
       <Button onClick={onSaveClick}>Save</Button>
+      <Button onClick={onCancelClick}>Cancel</Button>
+
     </div>
   );
 };
