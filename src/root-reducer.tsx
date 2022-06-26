@@ -18,8 +18,6 @@ const initialState: RootState = {
 }
 
 
-
-
 const actionTypeToActions: {[type: string] : 
     (products: Product[], product: Product) => Product[] } =  {
     'Add' : (products: Product[], product: Product) => (
@@ -29,8 +27,9 @@ const actionTypeToActions: {[type: string] :
 }
 
 
+
 export const rootReducer = combineReducers({products: productsReducer});
-  
+
 
 export function productsReducer(state: Product[] = initialProductsState, action: ProductAction ) {
     const func = actionTypeToActions[action.type];
